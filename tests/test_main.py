@@ -1,10 +1,30 @@
 from fastapi.testclient import TestClient
+
 from src.main import app
 
 client = TestClient(app)
 
-def test_calculate_bmi_success():
-    # Проверяем расчет для человека весом 70 кг и ростом 1.75 м
-    response = client.get("/laba1?weight=70&height=1.75")
+
+def test_bmi_success():
+    response = client.get(
+        "/bmi?weight=70&height=1.75"
+    )
+
     assert response.status_code == 200
-    assert response.json()["laba1"] == 22.86
+    assert response.json()["bmi"] == 22.86
+
+
+def test_bmi_zero_height():
+    response = client.get(
+        "/bmi?weight=70&height=0"
+    )
+
+    assert response.status_code == 400
+
+
+def test_bmi_negative_weight():
+    response = client.get(
+        "/bmi?weight=-10&height=1.75"
+    )
+
+    assert response.status_code == 400
