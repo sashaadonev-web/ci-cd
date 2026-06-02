@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+rom fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
